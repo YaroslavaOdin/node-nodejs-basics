@@ -1,17 +1,15 @@
-import fs from 'node:fs'
+import fs from 'node:fs/promises';
 import { dirname } from 'path';
 
 const filesPath = dirname(import.meta.filename);
-const errorMessage = 'FS operation failed'
+const errorMessage = 'FS operation failed';
 
 const read = async () => {
-    fs.readFile(`${filesPath}/files/fileToRead.txt`, function(err, data){
-        if (err) {
-            throw errorMessage;
-        } else {
-            console.log(data.toString());
-        }
-    });
+    try {
+        console.log((await fs.readFile(`${filesPath}/files/fileToRead.txt`)).toString());
+    } catch (err) {
+        throw Error(errorMessage);
+    }
 };
 
 await read();

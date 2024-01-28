@@ -1,5 +1,5 @@
-import fs from 'node:fs'
-import zlib from 'node:zlib'
+import fs from 'node:fs';
+import zlib from 'node:zlib';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 

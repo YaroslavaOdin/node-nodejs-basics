@@ -1,15 +1,15 @@
-import fs from 'node:fs'
+import fs from 'node:fs/promises';
 import { dirname } from 'path';
 
 const filsPath = `${dirname(import.meta.filename)}/files/fileToRemove.txt`;
-const errorMessage = 'FS operation failed'
+const errorMessage = 'FS operation failed';
 
 const remove = async () => {
-    if (fs.existsSync(filsPath)) {
-        fs.unlink(filsPath, (err) => {
-            if (err) throw new Error(errorMessage);;
-        });
-    } else throw new Error(errorMessage);
+    try {
+        await fs.unlink(filsPath);
+    } catch (err) {
+        throw Error(errorMessage);
+    }
 };
 
 await remove();

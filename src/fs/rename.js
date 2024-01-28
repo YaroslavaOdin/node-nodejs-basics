@@ -8,7 +8,9 @@ const newFilePath = '/files/properFilename.md';
 
 const rename = async () => {
     fs.rename(filesPath + prevFilePath, filesPath + newFilePath, err => {
-        if(err) throw errorMessage;
+        if(err) {
+            throw Error(errorMessage)
+        };
     });
 };
 

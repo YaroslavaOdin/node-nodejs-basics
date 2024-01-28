@@ -1,27 +1,20 @@
-import fs from 'node:fs'
+import * as fs from 'node:fs/promises';
 import { dirname } from 'path';
 
 const filesPath = dirname(import.meta.filename);
-const errorMessage = 'FS operation failed'
+const errorMessage = 'FS operation failed';
 
 const copy = async () => {
-    if (!fs.existsSync(`${filesPath}/files`)) {
+    try {
+        const files = await fs.readdir(`${filesPath}/files`);
+        await fs.mkdir(`${filesPath}/files_copy`);
+        files.forEach(async (fileName) => {
+            await fs.copyFile(`${filesPath}/files/${fileName}`, `${filesPath}/files_copy/${fileName}`);
+        });
+
+    } catch (err) {
         throw new Error(errorMessage);
     }
-
-    fs.mkdir(`${filesPath}/files_copy`, err => {
-        if (err) throw errorMessage;
-
-        fs.readdir(`${filesPath}/files`, (err, files) => {
-            if (err) throw errorMessage;
-
-            files.forEach((fileName) => {
-                fs.copyFile(`${filesPath}/files/${fileName}`, `${filesPath}/files_copy/${fileName}`, err => {
-                    if(err) throw errorMessage;
-                });
-            }) 
-        });
-    });
 };
 
 await copy();

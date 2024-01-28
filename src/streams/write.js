@@ -1,4 +1,4 @@
-import fs from 'node:fs'
+import fs from 'node:fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
